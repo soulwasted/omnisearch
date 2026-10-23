@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Omnisearch demo</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --fg: #18181b;
+      --muted: #71717a;
+      --line: #e4e4e7;
+      color-scheme: light;
+    }
+    :root[data-theme="dark"] {
+      --bg: #0c0c0e;
+      --fg: #fafafa;
+      --muted: #a1a1aa;
+      --line: #27272a;
+      color-scheme: dark;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0c0c0e;
+        --fg: #fafafa;
+        --muted: #a1a1aa;
+        --line: #27272a;
+        color-scheme: dark;
+      }
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      background: var(--bg);
+      color: var(--fg);
+      font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    main { max-width: 34rem; }
+    h1 { margin: 0 0 8px; font-size: 22px; letter-spacing: -0.01em; }
+    p { margin: 0 0 20px; color: var(--muted); }
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+    kbd {
+      padding: 1px 6px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--muted);
+      font: inherit;
+      font-size: 12px;
+    }
+    code { font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Omnisearch</h1>
+    <p>A framework-agnostic command palette. Press <kbd>⌘K</kbd> / <kbd>Ctrl K</kbd> or <kbd>/</kbd>, or use the button. Try <code>dark</code>, <code>accent</code>, <code>brno</code> (async) or <code>ds</code> (initials).</p>
+    <button type="button" data-omnisearch-open>Search… <kbd>⌘K</kbd></button>
+  </main>
+
+  <script type="module">
+    import { createOmnisearch } from "../dist/index.js";
+
+    const root = document.documentElement;
+    const isDark = () => root.dataset.theme
+      ? root.dataset.theme === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+
+    const accents = { Blue: "", Green: "#16a34a", Orange: "#ea580c" };
+    let accent = "Blue";
+
+    const icon = (path) =>
+      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+
+    const CITIES = ["Praha", "Brno", "Ostrava", "Plzeň", "Liberec", "Olomouc", "České Budějovice", "Hradec Králové", "Ústí nad Labem", "Pardubice", "Zlín", "Jihlava", "Karlovy Vary", "Třebíč"];
+
+    createOmnisearch({
+      hotkey: ["mod+k", "/"],
+      recent: { storageKey: "omnisearch-demo:recent" },
+      items: () => [
+        { id: "home", label: "Home", group: "Pages", href: "#home", active: location.hash === "#home" || !location.hash, iconHtml: icon('<path d="M3 10.5 12 3l9 7.5V21H3z"/>') },
+        { id: "projects", label: "Projects", description: "Everything in progress", group: "Pages", href: "#projects", active: location.hash === "#projects", shortcut: "G P", iconHtml: icon('<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>') },
+        { id: "archive", label: "Archive", description: "Finished projects", group: "Pages", href: "#archive", indent: true, active: location.hash === "#archive" },
+        { id: "design-system", label: "Design system", description: "Tokens and components", group: "Pages", href: "#design-system", keywords: "tokens ui", iconHtml: icon('<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/>') },
+        { id: "dark", label: "Dark mode", group: "Settings", keywords: "theme appearance night", checked: isDark(), perform: () => { root.dataset.theme = isDark() ? "light" : "dark"; } },
+        ...Object.entries(accents).map(([name, value]) => ({
+          id: `accent-${name}`,
+          label: `Accent: ${name}`,
+          group: "Settings",
+          keywords: "color colour accent",
+          active: accent === name,
+          keepOpen: true,
+          searchOnly: name !== accent,
+          perform: () => {
+            accent = name;
+            document.querySelector("[data-omnisearch]").style.setProperty("--omni-accent", value || null);
+          },
+        })),
+        { id: "github", label: "GitHub", description: "soulwasted/omnisearch", group: "Links", href: "https://github.com/soulwasted/omnisearch", external: true, icon: "↗" },
+        { id: "reset", label: "Clear recent history", group: "Settings", searchOnly: true, perform: () => localStorage.removeItem("omnisearch-demo:recent") },
+      ],
+      sources: [
+        {
+          id: "cities",
+          group: "Cities (async)",
+          debounce: 120,
+          async search(query, signal) {
+            await new Promise((resolve, reject) => {
+              const timer = setTimeout(resolve, 350);
+              signal.addEventListener("abort", () => { clearTimeout(timer); reject(signal.reason); });
+            });
+            const q = query.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+            return CITIES
+              .filter((city) => city.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().includes(q))
+              .map((city) => ({ id: `city-${city}`, label: city, description: "Czech Republic", perform: () => alert(city) }));
+          },
+        },
+      ],
+      onSelect: (item) => console.log("[demo] selected", item.id),
+    });
+  </script>
+</body>
+</html>

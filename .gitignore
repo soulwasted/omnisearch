@@ -1,0 +1,4 @@
+node_modules/
+.DS_Store
+*.log
+# dist/ is committed on purpose: the package is installed straight from GitHub and served by jsDelivr.
