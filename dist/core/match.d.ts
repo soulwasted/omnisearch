@@ -1,4 +1,4 @@
-import type { OmnisearchItem } from "../types";
+import type { OmnisearchItem } from "../types.js";
 /** Half-open range `[start, end)` in the original label. */
 export type Range = [number, number];
 export interface Match {

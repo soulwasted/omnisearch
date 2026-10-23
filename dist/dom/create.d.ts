@@ -1,4 +1,4 @@
-import type { OmnisearchController, OmnisearchOptions, OmnisearchStrings } from "../types";
+import type { OmnisearchController, OmnisearchOptions, OmnisearchStrings } from "../types.js";
 /** Window event that opens every palette on the page. `detail.query` prefills the input. */
 export declare const OPEN_EVENT = "omnisearch:open";
 export declare const DEFAULT_STRINGS: OmnisearchStrings;

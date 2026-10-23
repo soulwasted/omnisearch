@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import { act, createElement, createRef } from "react";
 import { createRoot } from "react-dom/client";
-import { Omnisearch, type OmnisearchHandle } from "../src/react";
+import { Omnisearch, type OmnisearchHandle } from "../src/react.js";
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 

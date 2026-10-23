@@ -1,5 +1,5 @@
-import type { OmnisearchItem } from "../types";
-import { type Range } from "./match";
+import type { OmnisearchItem } from "../types.js";
+import { type Range } from "./match.js";
 export interface ResultRow {
     item: OmnisearchItem;
     ranges: Range[];

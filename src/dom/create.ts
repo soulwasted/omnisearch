@@ -1,16 +1,16 @@
-import { formatHotkey, matchesHotkey, parseHotkey, type Hotkey } from "../core/hotkey";
-import { matchItem, type Range } from "../core/match";
-import { toTerms } from "../core/normalize";
-import { pushRecent, readRecent } from "../core/recent";
-import { buildResults, type ResultGroup, type ResultRow } from "../core/results";
+import { formatHotkey, matchesHotkey, parseHotkey, type Hotkey } from "../core/hotkey.js";
+import { matchItem, type Range } from "../core/match.js";
+import { toTerms } from "../core/normalize.js";
+import { pushRecent, readRecent } from "../core/recent.js";
+import { buildResults, type ResultGroup, type ResultRow } from "../core/results.js";
 import type {
   OmnisearchController,
   OmnisearchItem,
   OmnisearchOptions,
   OmnisearchStrings,
-} from "../types";
-import { STYLES } from "./styles";
-import { watchScheme } from "./theme";
+} from "../types.js";
+import { STYLES } from "./styles.js";
+import { watchScheme } from "./theme.js";
 
 /** Window event that opens every palette on the page. `detail.query` prefills the input. */
 export const OPEN_EVENT = "omnisearch:open";

@@ -4,8 +4,8 @@
 import { useEffect, useImperativeHandle, useRef } from "react";
 import {
   createOmnisearch
-} from "@soulwasted/omnisearch";
-import { openOmnisearch } from "@soulwasted/omnisearch";
+} from "./index.js";
+import { openOmnisearch } from "./index.js";
 function Omnisearch({ ref, ...options }) {
   const controller = useRef(null);
   const latest = useRef(options);

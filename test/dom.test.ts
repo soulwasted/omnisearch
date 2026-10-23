@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, mock, test } from "bun:test";
-import { createOmnisearch, openOmnisearch } from "../src/index";
-import type { OmnisearchController, OmnisearchItem, OmnisearchOptions } from "../src/index";
+import { createOmnisearch, openOmnisearch } from "../src/index.js";
+import type { OmnisearchController, OmnisearchItem, OmnisearchOptions } from "../src/index.js";
 
 let palette: OmnisearchController | undefined;
 

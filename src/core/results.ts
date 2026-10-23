@@ -1,6 +1,6 @@
-import type { OmnisearchItem } from "../types";
-import { matchItem, type Range } from "./match";
-import { toTerms } from "./normalize";
+import type { OmnisearchItem } from "../types.js";
+import { matchItem, type Range } from "./match.js";
+import { toTerms } from "./normalize.js";
 
 export interface ResultRow {
   item: OmnisearchItem;

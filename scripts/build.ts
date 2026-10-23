@@ -1,5 +1,6 @@
 // Builds dist/: ESM bundles, a minified CDN build and type declarations.
 import { rm } from "node:fs/promises";
+import type { BunPlugin } from "bun";
 
 await rm("dist", { recursive: true, force: true });
 
@@ -13,11 +14,19 @@ async function build(config: Parameters<typeof Bun.build>[0]): Promise<void> {
 
 await build({ entrypoints: ["src/index.ts"], outdir: "dist" });
 await build({ entrypoints: ["src/index.ts"], outdir: "dist", naming: "omnisearch.min.js", minify: true });
-// The React adapter imports the core by package name, so apps never bundle two copies.
+// The React adapter keeps importing "./index.js" (dist/index.js) instead of inlining the
+// core, so apps that use both entries share one copy of it.
+const coreAsSibling: BunPlugin = {
+  name: "core-as-sibling",
+  setup(builder) {
+    builder.onResolve({ filter: /^\.\/index\.js$/ }, () => ({ path: "./index.js", external: true }));
+  },
+};
 await build({
   entrypoints: ["src/react.ts"],
   outdir: "dist",
-  external: ["react", "@soulwasted/omnisearch"],
+  external: ["react"],
+  plugins: [coreAsSibling],
   banner: '"use client";',
 });
 

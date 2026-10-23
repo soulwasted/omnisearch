@@ -10,10 +10,7 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "noEmit": true,
-    "paths": {
-      "@soulwasted/omnisearch": ["./src/index.ts"]
-    }
+    "noEmit": true
   },
   "include": ["src", "test", "scripts"]
 }

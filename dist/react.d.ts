@@ -1,7 +1,7 @@
 import { type Ref } from "react";
-import { type OmnisearchController, type OmnisearchOptions } from "@soulwasted/omnisearch";
-export { openOmnisearch } from "@soulwasted/omnisearch";
-export type { OmnisearchItem, OmnisearchOptions, OmnisearchSource, OmnisearchController } from "@soulwasted/omnisearch";
+import { type OmnisearchController, type OmnisearchOptions } from "./index.js";
+export { openOmnisearch } from "./index.js";
+export type { OmnisearchItem, OmnisearchOptions, OmnisearchSource, OmnisearchController } from "./index.js";
 /** Imperative handle exposed through `ref`. */
 export type OmnisearchHandle = Pick<OmnisearchController, "open" | "close" | "toggle" | "refresh" | "isOpen">;
 export interface OmnisearchProps extends OmnisearchOptions {

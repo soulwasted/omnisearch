@@ -16,14 +16,14 @@ Try it: `bun install && bun run demo`, then open http://localhost:4173/demo/.
 From GitHub (`dist/` is committed, so there is no build step on install):
 
 ```bash
-bun add github:soulwasted/omnisearch#v0.1.0
+bun add github:soulwasted/omnisearch#v0.1.1
 ```
 
 Or straight from a CDN in a static page:
 
 ```html
 <script type="module">
-  import { createOmnisearch } from "https://cdn.jsdelivr.net/gh/soulwasted/omnisearch@v0.1.0/dist/omnisearch.min.js";
+  import { createOmnisearch } from "https://cdn.jsdelivr.net/gh/soulwasted/omnisearch@v0.1.1/dist/omnisearch.min.js";
 </script>
 ```
 

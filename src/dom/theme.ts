@@ -1,4 +1,4 @@
-import type { OmnisearchTheme } from "../types";
+import type { OmnisearchTheme } from "../types.js";
 
 const THEME_ATTRIBUTES = ["data-theme", "data-color-scheme", "data-mode"];
 

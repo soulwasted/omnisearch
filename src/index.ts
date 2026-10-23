@@ -1,13 +1,13 @@
-export { createOmnisearch, openOmnisearch, OPEN_EVENT, DEFAULT_STRINGS } from "./dom/create";
-export { resolveScheme } from "./dom/theme";
-export { buildResults } from "./core/results";
-export { matchItem } from "./core/match";
-export { normalize } from "./core/normalize";
-export { parseHotkey, matchesHotkey, formatHotkey } from "./core/hotkey";
+export { createOmnisearch, openOmnisearch, OPEN_EVENT, DEFAULT_STRINGS } from "./dom/create.js";
+export { resolveScheme } from "./dom/theme.js";
+export { buildResults } from "./core/results.js";
+export { matchItem } from "./core/match.js";
+export { normalize } from "./core/normalize.js";
+export { parseHotkey, matchesHotkey, formatHotkey } from "./core/hotkey.js";
 
-export type { Range, Match } from "./core/match";
-export type { ResultGroup, ResultRow, BuildResultsOptions } from "./core/results";
-export type { Hotkey } from "./core/hotkey";
+export type { Range, Match } from "./core/match.js";
+export type { ResultGroup, ResultRow, BuildResultsOptions } from "./core/results.js";
+export type { Hotkey } from "./core/hotkey.js";
 export type {
   OmnisearchContext,
   OmnisearchController,
@@ -16,4 +16,4 @@ export type {
   OmnisearchSource,
   OmnisearchStrings,
   OmnisearchTheme,
-} from "./types";
+} from "./types.js";

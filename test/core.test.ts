@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { buildResults, formatHotkey, matchesHotkey, matchItem, normalize, parseHotkey } from "../src/index";
-import type { OmnisearchItem } from "../src/index";
+import { buildResults, formatHotkey, matchesHotkey, matchItem, normalize, parseHotkey } from "../src/index.js";
+import type { OmnisearchItem } from "../src/index.js";
 
 const item = (label: string, extra: Partial<OmnisearchItem> = {}): OmnisearchItem => ({ id: label, label, ...extra });
 const terms = (query: string) => normalize(query).split(/\s+/).filter(Boolean);

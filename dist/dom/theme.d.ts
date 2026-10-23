@@ -1,4 +1,4 @@
-import type { OmnisearchTheme } from "../types";
+import type { OmnisearchTheme } from "../types.js";
 export type Scheme = "light" | "dark";
 /**
  * Resolves "auto" the way most sites mark their theme: a `data-theme` (or similar)
