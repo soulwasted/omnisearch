@@ -10,3 +10,4 @@ Cmd+K command palette library, consumed by other projects straight from GitHub (
 - `dist/` is committed. Run `bun run check` (typecheck, tests, build) and commit `dist/` together with source changes.
 - Public API changes go into README.md (options, item fields, tokens, parts) and CHANGELOG.md.
 - Demo: `bun run demo` → http://localhost:4173/demo/ (also in `.claude/launch.json` as `demo`).
+- Don't `bun add` react or react-dom: Bun rewrites the `peerDependencies` range to the installed version. Edit `devDependencies` by hand and run `bun install`; the peer range stays `>=18`.
