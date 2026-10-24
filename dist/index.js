@@ -87,33 +87,26 @@ function findWordStart(text, term) {
   }
   return -1;
 }
-function subsequence(text, term) {
-  const pick = (preferWordStart) => {
-    const indices2 = [];
-    let cursor = 0;
-    for (const char of term) {
-      let found = -1;
-      if (preferWordStart) {
-        for (let i = text.indexOf(char, cursor);i !== -1; i = text.indexOf(char, i + 1)) {
-          if (isWordStart(text, i)) {
-            found = i;
-            break;
-          }
-        }
-      }
-      if (found === -1)
-        found = text.indexOf(char, cursor);
-      if (found === -1)
-        return null;
-      indices2.push(found);
-      cursor = found + 1;
+function abbreviation(text, term) {
+  const walk = (position, previous) => {
+    if (position === term.length)
+      return [];
+    const char = term[position] ?? "";
+    if (previous >= 0 && text[previous + 1] === char) {
+      const rest = walk(position + 1, previous + 1);
+      if (rest)
+        return [previous + 1, ...rest];
     }
-    return indices2;
-  };
-  const indices = pick(true) ?? pick(false);
-  if (!indices || !isWordStart(text, indices[0] ?? -1))
+    for (let i = text.indexOf(char, previous + 1);i !== -1; i = text.indexOf(char, i + 1)) {
+      if (previous >= 0 && i === previous + 1 || !isWordStart(text, i))
+        continue;
+      const rest = walk(position + 1, i);
+      if (rest)
+        return [i, ...rest];
+    }
     return null;
-  return indices;
+  };
+  return walk(0, -1);
 }
 function toOriginalRanges(ranges, label, map) {
   const mapped = ranges.map(([start, end]) => {
@@ -155,7 +148,7 @@ function matchItem(item, terms) {
     } else if (prepared.group.includes(term)) {
       termScore = 4;
     } else if (term.length >= 2) {
-      const indices = subsequence(label, term);
+      const indices = abbreviation(label, term);
       if (indices) {
         termScore = 2;
         for (const index of indices)

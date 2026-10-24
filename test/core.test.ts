@@ -38,9 +38,15 @@ describe("matchItem", () => {
     expect(keyword!.score).toBeGreaterThan(description!.score);
   });
 
-  test("matches initials as a subsequence starting at a word", () => {
+  test("matches abbreviations built from word prefixes", () => {
     expect(matchItem(item("Design system"), terms("ds"))?.ranges).toEqual([[0, 1], [7, 8]]);
+    expect(matchItem(item("Design system"), terms("desys"))?.ranges).toEqual([[0, 2], [7, 10]]);
     expect(matchItem(item("Design system"), terms("sd"))).toBeNull();
+  });
+
+  test("does not match letters scattered across a long label", () => {
+    expect(matchItem(item("Tři úmluvy a mezinárodní prohibice"), terms("true"))).toBeNull();
+    expect(matchItem(item("Have a Good Trip: Adventures in Psychedelics"), terms("true"))).toBeNull();
   });
 });
 

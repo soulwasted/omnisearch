@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 — 2026-10-24
+
+- Changed: fuzzy matching only accepts abbreviations built from word prefixes (`ds`, `desys` → Design system). Letters scattered across long labels no longer match, which removes noise in large item sets.
+
 ## 0.1.3 — 2026-10-24
 
 - Fixed: the React peer range is `>=18` again (it had been narrowed to `^19.3.1` by accident).

@@ -5,7 +5,7 @@ A ⌘K / Ctrl K command palette you can drop into any project: plain HTML, Vite,
 - **Isolated UI.** Renders inside a shadow root, so host CSS (Tailwind preflight, global `input {}` rules) can't break it.
 - **Themeable.** Semantic `--omni-*` tokens that inherit from the page, plus `::part()` for anything else.
 - **Follows the page theme.** Picks up `.dark` / `[data-theme]` on `<html>` or `<body>` (next-themes, Tailwind, Style Kit) and falls back to the OS setting.
-- **Search that forgives.** Diacritics-insensitive (`cislo` finds `Číslo`), multi-term, initials (`ds` → Design system), ranked and highlighted.
+- **Search that forgives.** Diacritics-insensitive (`cislo` finds `Číslo`), multi-term, abbreviations from word prefixes (`ds` or `desys` → Design system), ranked and highlighted.
 - **More than links.** Actions, toggles that keep the palette open, current-page badges, recent history, search-only items and async sources.
 - **Accessible.** ARIA combobox/listbox, focus restore, live result count, reduced motion.
 
@@ -16,14 +16,14 @@ Try it: `bun install && bun run demo`, then open http://localhost:4173/demo/.
 From GitHub (`dist/` is committed, so there is no build step on install):
 
 ```bash
-bun add github:soulwasted/omnisearch#v0.1.3
+bun add github:soulwasted/omnisearch#v0.1.4
 ```
 
 Or straight from a CDN in a static page:
 
 ```html
 <script type="module">
-  import { createOmnisearch } from "https://cdn.jsdelivr.net/gh/soulwasted/omnisearch@v0.1.3/dist/omnisearch.min.js";
+  import { createOmnisearch } from "https://cdn.jsdelivr.net/gh/soulwasted/omnisearch@v0.1.4/dist/omnisearch.min.js";
 </script>
 ```
 

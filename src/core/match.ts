@@ -53,33 +53,28 @@ function findWordStart(text: string, term: string): number {
 }
 
 /**
- * Matches `term` as a subsequence of `text` ("ds" → "Design system"),
- * preferring word starts. The first character must start a word.
+ * Matches `term` as an abbreviation of `text`: word prefixes in order, so
+ * "ds" and "desys" find "Design system". Every character either continues the
+ * previous one or starts a new word, which keeps long labels from matching
+ * letters scattered across them.
  */
-function subsequence(text: string, term: string): number[] | null {
-  const pick = (preferWordStart: boolean): number[] | null => {
-    const indices: number[] = [];
-    let cursor = 0;
-    for (const char of term) {
-      let found = -1;
-      if (preferWordStart) {
-        for (let i = text.indexOf(char, cursor); i !== -1; i = text.indexOf(char, i + 1)) {
-          if (isWordStart(text, i)) {
-            found = i;
-            break;
-          }
-        }
-      }
-      if (found === -1) found = text.indexOf(char, cursor);
-      if (found === -1) return null;
-      indices.push(found);
-      cursor = found + 1;
+function abbreviation(text: string, term: string): number[] | null {
+  const walk = (position: number, previous: number): number[] | null => {
+    if (position === term.length) return [];
+    const char = term[position] ?? "";
+    if (previous >= 0 && text[previous + 1] === char) {
+      const rest = walk(position + 1, previous + 1);
+      if (rest) return [previous + 1, ...rest];
     }
-    return indices;
+    for (let i = text.indexOf(char, previous + 1); i !== -1; i = text.indexOf(char, i + 1)) {
+      // previous + 1 was already tried as a continuation above.
+      if ((previous >= 0 && i === previous + 1) || !isWordStart(text, i)) continue;
+      const rest = walk(position + 1, i);
+      if (rest) return [i, ...rest];
+    }
+    return null;
   };
-  const indices = pick(true) ?? pick(false);
-  if (!indices || !isWordStart(text, indices[0] ?? -1)) return null;
-  return indices;
+  return walk(0, -1);
 }
 
 function toOriginalRanges(ranges: Range[], label: string, map: number[]): Range[] {
@@ -128,7 +123,7 @@ export function matchItem(item: OmnisearchItem, terms: string[]): Match | null {
     } else if (prepared.group.includes(term)) {
       termScore = 4;
     } else if (term.length >= 2) {
-      const indices = subsequence(label, term);
+      const indices = abbreviation(label, term);
       if (indices) {
         termScore = 2;
         for (const index of indices) hits.push([index, index + 1]);
