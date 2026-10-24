@@ -448,7 +448,9 @@ export function createOmnisearch(initialOptions: OmnisearchOptions = {}): Omnise
     const trigger = target?.closest("[data-omnisearch-open]");
     if (!trigger) return;
     event.preventDefault();
-    open(trigger.getAttribute("data-omnisearch-open") || undefined);
+    // JSX renders a bare `data-omnisearch-open` as "true", which is not a query.
+    const query = trigger.getAttribute("data-omnisearch-open");
+    open(query && query !== "true" ? query : undefined);
   }
 
   function onOpenEvent(event: Event): void {

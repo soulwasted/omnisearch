@@ -16,14 +16,14 @@ Try it: `bun install && bun run demo`, then open http://localhost:4173/demo/.
 From GitHub (`dist/` is committed, so there is no build step on install):
 
 ```bash
-bun add github:soulwasted/omnisearch#v0.1.1
+bun add github:soulwasted/omnisearch#v0.1.2
 ```
 
 Or straight from a CDN in a static page:
 
 ```html
 <script type="module">
-  import { createOmnisearch } from "https://cdn.jsdelivr.net/gh/soulwasted/omnisearch@v0.1.1/dist/omnisearch.min.js";
+  import { createOmnisearch } from "https://cdn.jsdelivr.net/gh/soulwasted/omnisearch@v0.1.2/dist/omnisearch.min.js";
 </script>
 ```
 
@@ -48,7 +48,7 @@ Or straight from a CDN in a static page:
 </script>
 ```
 
-Any element with `data-omnisearch-open` opens the palette. Give the attribute a value to prefill the query: `data-omnisearch-open="settings"`.
+Any element with `data-omnisearch-open` opens the palette. Give the attribute a value to prefill the query: `data-omnisearch-open="settings"`. In JSX a bare `data-omnisearch-open` works too.
 
 ### React / Next.js
 

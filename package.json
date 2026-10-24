@@ -1,6 +1,6 @@
 {
   "name": "@soulwasted/omnisearch",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Framework-agnostic Cmd+K command palette with a thin React adapter. Zero runtime dependencies.",
   "type": "module",
   "license": "MIT",

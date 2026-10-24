@@ -934,7 +934,8 @@ function createOmnisearch(initialOptions = {}) {
     if (!trigger)
       return;
     event.preventDefault();
-    open(trigger.getAttribute("data-omnisearch-open") || undefined);
+    const query2 = trigger.getAttribute("data-omnisearch-open");
+    open(query2 && query2 !== "true" ? query2 : undefined);
   }
   function onOpenEvent(event) {
     open(event.detail?.query);

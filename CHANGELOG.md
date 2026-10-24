@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 — 2026-10-24
+
+- Fixed: a bare `data-omnisearch-open` in JSX (rendered as `="true"`) opened the palette with the query "true".
+
 ## 0.1.1 — 2026-10-23
 
 - Fixed: apps bundled with Bun pulled a second copy of the core through the React adapter (the repo's tsconfig `paths` leaked into git installs). The adapter now imports `./index.js` directly.

@@ -78,6 +78,16 @@ describe("opening and closing", () => {
     expect(ui.input.value).toBe("docs");
   });
 
+  test('a bare trigger rendered by JSX as "true" opens without a query', () => {
+    const ui = setup();
+    const trigger = document.createElement("button");
+    trigger.setAttribute("data-omnisearch-open", "true");
+    document.body.append(trigger);
+    trigger.click();
+    expect(palette!.isOpen).toBe(true);
+    expect(ui.input.value).toBe("");
+  });
+
   test("bare-key hotkeys are ignored while typing in a field", () => {
     setup({ hotkey: ["mod+k", "/"] });
     const field = document.createElement("input");
